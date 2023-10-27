@@ -21,9 +21,6 @@ on: [push]
 jobs:
   PR_check:
     runs-on: ubuntu-latest
-    #defaults:
-      #run:
-        #working-directory: ./doctest
     steps:
       # This first checkout gets the test setup
       # which is basically a default Docusaurus
