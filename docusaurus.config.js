@@ -62,15 +62,10 @@ const config = {
         title: 'My Site',
         logo: {
           alt: 'My Site Logo',
+          href: 'https://github.com/facebook/docusaurus',
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
