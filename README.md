@@ -31,7 +31,7 @@ jobs:
       # to throw an exception.
       - uses: actions/checkout@v4
         with:
-          repository: 'DanRoscigno/docusaurus-build'
+          repository: 'StarRocks/docusaurus-build'
 
       # this second checkout gets the docs from this
       # repo and checks them out to a dir named:
