@@ -1,41 +1,51 @@
-# Website
+# docusaurus-build
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This is a test-harness for Docusaurus v3. It is meant to be pulled by a GitHub
+workflow and used to test Markdown files.
 
-### Installation
+## Example workflow
 
-```
-$ yarn
-```
-
-### Local Development
-
-```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
+> Note:
+>
+> This workflow goes into the repo that contains your Markdown files. It pulls the slimmed down Docusaurus v3 files from this repo, and then it pulls the repo that contains your Markdown files.
+>
+> When it pulls the Markdown files it checks them out into a directory named `docs`. If your Markdown files are already in a dir named `docs/`, then adjust the `path:` line of the workflow.
+>
+> The `docusaurus_config.js` file has both broken link settings set to `throw` as we don't tolerate broken links. There is one sample Markdown file in our doc repos (`README.md`) that contains example markdown links that are invalid. I was surprised that these caused failures since they are in backticks, but they do. There is a `run rm README.md` in the workflow to avoid this issue.
 
 ```
-$ yarn build
+name: testbuild document site
+
+on: [push]
+
+jobs:
+  PR_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # This first checkout gets the test setup
+      # which is basically a default Docusaurus
+      # build with the broken links checks set
+      # to throw an exception.
+      - uses: actions/checkout@v4
+        with:
+          repository: 'DanRoscigno/docusaurus-build'
+
+      # this second checkout gets the docs from this
+      # repo and checks them out to a dir named:
+      # `docs`
+      - uses: actions/checkout@v4
+        with:
+          path: 'docs'
+
+      # The README file has some sample markdown that fails
+      # link checking
+      - run: rm ./docs/README.md
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
