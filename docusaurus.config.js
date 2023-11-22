@@ -6,13 +6,6 @@
 
 import {themes as prismThemes} from 'prism-react-renderer';
 
-// if the env var DISABLE_VERSIONING is set
-// (example `export DISABLE_VERSIONING=true`) then build only the
-// content of `docs`. To build all versions remove the env var with
-// `unset DISABLE_VERSIONING` (don't set it to false, we are checking
-// to see if the var is set, not what the value is).
-const isVersioningDisabled = !!process.env.DISABLE_VERSIONING || false;
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'StarRocks',
@@ -66,36 +59,15 @@ const config = {
           // versions, so the banner is set to none on the versions other than latest (latest
           // doesn't get a banner by default).
           lastVersion: (() => {
-              if (isVersioningDisabled) {
                 return 'current';
-              } else {
-                return '3.1';
-              }
             })(),
 
           onlyIncludeVersions: (() => {
-              if (isVersioningDisabled) {
                 return ['current'];
-              } else {
-                return ['3.1', '3.0', '2.5', '2.3', '2.2', '2.1', '2.0', '1.19'];
-              }
             })(),
 
           versions: (() => {
-              if (isVersioningDisabled) {
                 return { current: { label: 'current' } };
-              } else {
-                return {
-                  '3.1': { label: 'Latest-3.1' },
-                  '3.0': { label: '3.0', banner: 'none' },
-                  '2.5': { label: 'Stable-2.5', banner: 'none' },
-                  '2.3': { label: '2.3', banner: 'none' },
-                  '2.2': { label: '2.2', banner: 'none' },
-                  '2.1': { label: '2.1', banner: 'none' },
-                  '2.0': { label: '2.0', banner: 'none' },
-                  '1.19': { label: '1.19', banner: 'none' },
-                };
-              }
             })(),
 
         },
